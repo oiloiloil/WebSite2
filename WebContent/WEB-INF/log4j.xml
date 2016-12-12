@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <!-- 設置ConsoleAppender讓logger輸出至console -->
+    <appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
+        <param name="Threshold" value="DEBUG" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yy/MM/dd HH:mm:ss}][%p][%C-%L] %m%n"/>
+        </layout>
+    </appender>
+
+    <!-- rootLogger -->
+    <root>
+        <priority value ="error" />
+        <appender-ref ref="consoleAppender" />
+    </root>
+
+    <!-- 設置logger -->
+    <logger name="website" additivity="false" >
+      <level value="DEBUG" />
+      <appender-ref ref="consoleAppender"/>
+    </logger>
+</log4j:configuration>
