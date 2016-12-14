@@ -22,53 +22,38 @@ import website.dao.AccountDao;
 public class AccountDaoImpl implements AccountDao{
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
+	private ParseXml parseXml;
 	
+	@Resource(name = "dataSource")
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
+		this.jdbcTemplate = new JdbcTemplate(dataSource);
+		parseXml = new ParseXml();
 	}
 	
-	public void initialConnect() {
-		Connection conn = null;
-		Statement stat = null;
-	}
 	
 	//取得user資料，可以自行編寫修改，請使用JdbcTemplate做操作
+	/*
+	 * DataSource 是個資料來源，可用來取得資料庫連線 java.sql.Connection 的實作物件，
+	 * 如果資料庫檔案不存在，在 setUrl 時就會建立新的檔案。在 Spring 的 JDBC 的封裝中，
+	 * 最常使用的是 JdbcTemplate，其封裝了 JDBC 使用過程中可共用的樣版流程，
+	 * 建構 JdbcTemplate 時，需要的正是一個 DataSource 實作物件。
+	 * queryForObject(cqlCmd, 傳入值, 回傳值的類型)，
+	 * 		Ex. String name = (String) jdbcTemplate.queryForObject(
+                "SELECT name FROM USER WHERE id = ?",
+                 new Object[] {id},
+                 java.lang.String.class);
+	 * 如果要回傳多筆資料，可以使用queryForList()，Ex. "Select * From account"
+	 */
 	@Override
 	public List<Map<String, Object>> getAccountByName(String name, String password) throws Exception {
+		List<Map<String, Object>> accounts = null;
 		
-		return null;
+		// 取出的accounts既為name這位user的所有可能密碼的list，只取出pass和auth這兩個欄位
+		String sqlCmd = parseXml.getSqlByName("Account.checkAccount");
+		accounts = jdbcTemplate.queryForList(sqlCmd, name);
 		
+		return accounts;
 	}
 	
-	public void select() {
-		Connection conn = null;
-		Statement stmt = null;
-		ResultSet result = null;
-		String sqlCmd = "";
-		
-		try {
-			conn = dataSource.getConnection();
-			stmt = conn.createStatement();
-			stmt.executeQuery(sqlCmd);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			if(conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} // 
-			if(stmt != null) {
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			} // 
-			
-		}
-	}
 }

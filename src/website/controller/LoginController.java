@@ -28,22 +28,15 @@ public class LoginController {
 			HttpServletResponse resp) throws Exception {
 		String name = req.getParameter("userName");
 		String password = req.getParameter("password");
-		System.out.println("name: " + name);
-		System.out.println("password: " + password);
 		// 檢核使用者登入帳密
 		Map<String, Object> resultMap = accountModel.checkAccount(name, password);
-		
 		// 請實做：根據登入是否成功，回傳相對應ModelView
-		if(isUserInfoCorrect(name, password))
+		if(resultMap != null) // 有回傳資料代表登入成功
 			return new ModelAndView("index", "name", name);
-		else
+		else // 登入失敗
 			return new ModelAndView("login", "errMsg", "帳號密碼輸入錯誤");
 	}
 	
-	private boolean isUserInfoCorrect(String name, String passwd) {
-		return false;
-	}
-
 	@RequestMapping("/industryList.do")
     public ModelAndView doIndustry(HttpServletRequest req,
             HttpServletResponse resp) throws Exception {

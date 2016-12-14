@@ -14,7 +14,6 @@ import website.model.AccountModel;
 
 @Service("accountModel")
 public class AccountModelImpl implements AccountModel{
-	
 	private AccountDao accountDao;
 	
 	@Resource(name = "accountDao")
@@ -25,6 +24,17 @@ public class AccountModelImpl implements AccountModel{
 	// 檢查使用者登入帳號密碼
 	@Override
 	public Map<String, Object> checkAccount(String name, String password) throws Exception {
-		return null;
+		List<Map<String, Object>> accounts = accountDao.getAccountByName(name, password); // 一個名字可能有多組不同的密碼
+		
+		for(Map<String, Object> user : accounts) {
+			if(user.get("pass").equals(password)) {
+				Map<String, Object> userAccount = new HashMap<String, Object>();
+				userAccount.put("password", user.get("pass"));
+				userAccount.put("auth", user.get("auth"));
+				return userAccount;
+			}
+		}
+		
+		return null; // 如果accounts裡面找不到一個符合password的map，代表使用者的密碼輸入錯誤
 	}
 }

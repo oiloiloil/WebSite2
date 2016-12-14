@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+
+	<!-- Account Start-->
+	
+	<Account.checkAccount>
+		SELECT PASS, AUTH FROM ACCOUNT WHERE ACCT = ?
+	</Account.checkAccount>
+	
+	<!-- Account End-->
+	
+	
+	<!-- Industry Start -->
+	
+	<Industry.queryIndustry>
+		SELECT * FROM INDUSTRY LIMIT ?, ?
+	</Industry.queryIndustry>
+	
+	<Industry.getIndustryCount>
+		SELECT COUNT(*) COUNT FROM INDUSTRY
+	</Industry.getIndustryCount>
+	
+	<Industry.insertIndustry>
+		INSERT INTO INDUSTRY(IND_NAME, IND_DESC) VALUES (?, ?)
+	</Industry.insertIndustry>
+	
+	<Industry.updateIndustry>
+		UPDATE INDUSTRY SET IND_NAME = ?, IND_DESC = ? WHERE PK = ?
+	</Industry.updateIndustry>
+	
+	<Industry.deleteIndustry>
+		DELETE FROM INDUSTRY WHERE PK = ?
+	</Industry.deleteIndustry>
+	
+	<!-- Industry End -->
+</sqls>
