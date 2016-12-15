@@ -26,10 +26,53 @@
 					</td>
 				</tr>
 				<tr>
+					<td><input id="register_button" type="button" value="註冊新帳號"/></td>
 					<td><span><input id="login_button" type="submit" value="登入" /></span></td>
 					<td>${errMsg}</td>
 				</tr>
 			</table>
 	</form>
+	<div id="dialog-form" title="Create new user">
+  		<p class="validateTips">All form fields are required.</p>
+ 
+  		<form>
+    		<fieldset>
+      		<label for="name">Name</label>
+      		<input type="text" name="name" id="name" value="Jane Smith" class="text ui-widget-content ui-corner-all">
+      		<label for="email">Email</label>
+      		<input type="text" name="email" id="email" value="jane@smith.com" class="text ui-widget-content ui-corner-all">
+      		<label for="password">Password</label>
+      		<input type="password" name="password" id="password" value="xxxxxxx" class="text ui-widget-content ui-corner-all">
+ 
+      		<!-- Allow form submission with keyboard without duplicating the dialog button -->
+      		<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+    		</fieldset>
+  		</form>
+	</div>
+	
+	<script>
+		var dialog;
+		dialog = $("#dialog-form").dialog({
+			autoOpen: false,
+			height: 400,
+			width: 350,
+			modal: true,
+			buttons: {
+			"Create an account": addUser,
+			Cancel: function() {
+			dialog.dialog( "close" );
+			}
+			},
+			close: function() {
+			form[ 0 ].reset();
+			allFields.removeClass( "ui-state-error" );
+			}
+		});
+		
+		$("#register_button").click(function() {
+			dialog.dialog( "open" );
+		})
+		
+	</script>
 </body>
 </html>

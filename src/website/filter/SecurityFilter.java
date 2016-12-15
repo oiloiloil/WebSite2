@@ -30,10 +30,6 @@ public class SecurityFilter implements Filter {
 		while(token.hasMoreTokens()) {
 			urls.add(token.nextToken());
 		}
-		
-		for(String s : urls) {
-			System.out.println(s);
-		}
     }
 	
     @Override
