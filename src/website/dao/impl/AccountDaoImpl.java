@@ -48,7 +48,6 @@ public class AccountDaoImpl implements AccountDao{
 	@Override
 	public List<Map<String, Object>> getAccountByName(String name, String password) throws Exception {
 		List<Map<String, Object>> accounts = null;
-		
 		// 取出的accounts既為name這位user的所有可能密碼的list，只取出pass和auth這兩個欄位
 		String sqlCmd = parseXml.getSqlByName("Account.checkAccount");
 		accounts = jdbcTemplate.queryForList(sqlCmd, name);

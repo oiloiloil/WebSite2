@@ -3,12 +3,27 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
     <!-- 設置ConsoleAppender讓logger輸出至console -->
     <appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
-        <param name="Threshold" value="DEBUG" />
+        <param name="Threshold" value="TRACE" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="[%d{yy/MM/dd HH:mm:ss}][%p][%C-%L] %m%n"/>
         </layout>
     </appender>
-
+    <!--
+    	DailyRollingFileAppender: daily log file generation.
+    	LEVEL層級: ALL < DEBUG < INFO < WARN < ERROR < FATAL < OFF，
+    	 如果logger的level小於appender的 threshold level，logger的資訊就不會被記錄下來。
+     -->
+    <appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
+    	<!-- append 設定為false，should not overwrite -->
+    	<param name="append" value="false" />
+    	<param name="File" value="D:/Logs_training/logger.log" />
+    	<param name="DatePattern" value="'-'yyyy-MM-dd'.log'" />
+    	<param name="Threshold" value="TRACE" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yy/MM/dd HH:mm:ss}][%p][%C-%L] %m%n"/>
+        </layout>
+    </appender>
+    
     <!-- rootLogger -->
     <root>
         <priority value ="error" />
@@ -17,7 +32,45 @@
 
     <!-- 設置logger -->
     <logger name="website" additivity="false" >
-      <level value="DEBUG" />
-      <appender-ref ref="consoleAppender"/>
+      	<level value="DEBUG" />
+      	<appender-ref ref="consoleAppender"/>
+      	<appender-ref ref="file" />
     </logger>
+    
+    <!-- 設置jdbcTemplate，紀錄執行的sql語句以及參數，注意logger level的設定和appender threshold的設定 -->
+    <logger name="org.springframework.jdbc.core.JdbcTemplate" additivity="false">
+        <level value="DEBUG" />   
+        <appender-ref ref="consoleAppender" />  
+        <appender-ref ref="file" />
+    </logger>
+    <logger name="org.springframework.jdbc.core.StatementCreatorUtils" additivity="false">
+        <level value="TRACE" />   
+        <appender-ref ref="consoleAppender" />
+        <appender-ref ref="file" /> 
+    </logger>
+    
+    <!-- 
+    <logger name="org.springframework.jdbc.core" additivity="true">
+        <level value="DEBUG" />   
+        <appender-ref ref="consoleAppender" />  
+    </logger>
+     -->
+    <!-- 
+    <logger name="java.sql.Connection" additivity="true">  
+        <level value="DEBUG" />  
+        <appender-ref ref="consoleAppender" />  
+    </logger>  
+    <logger name="java.sql.Statement" additivity="true">  
+        <level value="DEBUG" />  
+        <appender-ref ref="consoleAppender" />  
+    </logger>  
+    <logger name="java.sql.PreparedStatement" additivity="true">  
+        <level value="DEBUG" />  
+        <appender-ref ref="consoleAppender" />  
+    </logger>  
+    <logger name="java.sql.ResultSet" additivity="true">  
+        <level value="DEBUG" />  
+        <appender-ref ref="consoleAppender" />  
+    </logger>  
+     -->
 </log4j:configuration>
