@@ -27,4 +27,20 @@
   <listener>
     <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
   </listener>
+  	
+  	<filter>
+		<filter-name>SecurityFilter</filter-name>
+		<filter-class>website.filter.SecurityFilter</filter-class>
+		<init-param>
+			<param-name>avoid-urls</param-name>
+			<param-value>login.do,error.do</param-value>
+		</init-param>
+	</filter>
+  
+	<filter-mapping>
+		<filter-name>SecurityFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	
 </web-app>

@@ -14,11 +14,11 @@
 </head>
 <body>
 <div id="welcome">
-Hi, ${name}. Welcome to Web Site Practice. <a href="logout.do">登出</a>
+Hi, ${resultMap.Name}. Welcome to Web Site Practice. <a href="logout.do">登出</a>
 </div>
 <div id="menu">
     <div id="accordion">
-    <c:if test="${Authorise == 1}">
+    <c:if test="${resultMap.Authorise == 1}">
         <div>
             <h3><a href="#">選單參數管理</a></h3>
             <div>
@@ -32,7 +32,7 @@ Hi, ${name}. Welcome to Web Site Practice. <a href="logout.do">登出</a>
         </div>
     </c:if>
         <div>
-            <h3><a href="#">員工維護管理</a></h3>
+            <h3><a href="industryList.do">員工維護管理</a></h3>
             <div>客戶資料維護</div>
         </div>
         <div>
@@ -55,5 +55,11 @@ Hi, ${name}. Welcome to Web Site Practice. <a href="logout.do">登出</a>
 </div>
 <div id="mainPage">
 </div>
+<script>
+
+	function goIndustry() {
+		
+	}
+</script>
 </body>
 </html>

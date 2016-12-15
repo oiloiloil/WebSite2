@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,8 +32,14 @@ public class LoginController {
 		// 檢核使用者登入帳密
 		Map<String, Object> resultMap = accountModel.checkAccount(name, password);
 		// 請實做：根據登入是否成功，回傳相對應ModelView
-		if(resultMap != null) // 有回傳資料代表登入成功
-			return new ModelAndView("index", "name", name);
+		if(resultMap != null) { // 有回傳資料代表登入成功
+			HttpSession session = req.getSession();
+			session.setAttribute("acct", name);
+			session.setAttribute("pass", resultMap.get("Password"));
+			session.setAttribute("Authorise", resultMap.get("Authorise"));
+			
+			return new ModelAndView("index", "resultMap", resultMap);
+		}
 		else // 登入失敗
 			return new ModelAndView("login", "errMsg", "帳號密碼輸入錯誤");
 	}
@@ -46,7 +53,8 @@ public class LoginController {
     @RequestMapping("/logout.do")
 	public ModelAndView handleLogout(HttpServletRequest arg0,
 			HttpServletResponse arg1) throws Exception {
-		
+    	arg0.getSession().removeAttribute("acct");
+    	arg0.getSession().removeAttribute("pass");
 		arg0.getSession().removeAttribute("Authorise");
 		
 		return new ModelAndView("login");

@@ -29,8 +29,9 @@ public class AccountModelImpl implements AccountModel{
 		for(Map<String, Object> user : accounts) {
 			if(user.get("pass").equals(password)) {
 				Map<String, Object> userAccount = new HashMap<String, Object>();
-				userAccount.put("password", user.get("pass"));
-				userAccount.put("auth", user.get("auth"));
+				userAccount.put("Name", name);
+				userAccount.put("Password", user.get("pass"));
+				userAccount.put("Authorise", user.get("auth"));
 				return userAccount;
 			}
 		}
