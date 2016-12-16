@@ -4,10 +4,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link type="text/css" href="css/jquery-ui-1.8.20.custom.css" rel="stylesheet" />
-	<link type="text/css" href="css/login.css" rel="stylesheet" />
-	<script type="text/javascript" src="js/jquery-1.7.2.js"></script>
-	<script type="text/javascript" src="js/jquery-ui-1.8.20.custom.min.js"></script>
+<link type="text/css" href="css/jquery-ui-1.8.20.custom.css" rel="stylesheet" />
+<link type="text/css" href="css/login.css" rel="stylesheet" />
+<script type="text/javascript" src="js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.20.custom.min.js"></script>
+<style>
+	clickbtn {background: #e77d09;}
+	label, input { display:block; }
+    input.text { margin-bottom:12px; width:95%; padding: .4em; }
+    fieldset { padding:0; border:0; margin-top:25px; }
+    h1 { font-size: 1.2em; margin: .6em 0; }
+    div#users-contain { width: 350px; margin: 20px 0; }
+    div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+    div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+    .ui-dialog .ui-state-error { padding: .3em; }
+    .validateTips { border: 1px solid transparent; padding: 0.3em; color: red;}
+</style>
 <title>WebSite Login</title>
 </head>
 <body>
@@ -32,17 +44,28 @@
 				</tr>
 			</table>
 	</form>
-	<div id="dialog-form" title="Create new user">
+	<!-- 
+		註冊表單
+	-->
+	<div id="dialog-form" title="註冊新帳號">
   		<p class="validateTips">All form fields are required.</p>
  
-  		<form>
+  		<form id="submit-form">
     		<fieldset>
-      		<label for="name">Name</label>
-      		<input type="text" name="name" id="name" value="Jane Smith" class="text ui-widget-content ui-corner-all">
+    		<!-- for表示label與哪個元件綁定，傳入元件的id -->
+      		<label for="name">帳號</label>
+      		<input type="text" name="name" id="name" placeholder="帳號 12碼英數字" class="text ui-widget-content ui-corner-all" >
+      		<label for="passwd">密碼</label>
+      		<input type="password" name="passwd" id="passwd" placeholder="6~12碼英數字" class="text ui-widget-content ui-corner-all">
+      		<label for="confirmpasswd">再次輸入密碼</label>
+      		<input type="password" name="confirmpasswd" id="confirmpasswd" placeholder="再次輸入密碼" class="text ui-widget-content ui-corner-all">
+      		<label for="phone">電話號碼</label>
+      		<input type="text"  name="phone" id="phone" placeholder="09xxxxxxxx, 10碼數字" class="text ui-widget-content ui-corner-all">
       		<label for="email">Email</label>
-      		<input type="text" name="email" id="email" value="jane@smith.com" class="text ui-widget-content ui-corner-all">
-      		<label for="password">Password</label>
-      		<input type="password" name="password" id="password" value="xxxxxxx" class="text ui-widget-content ui-corner-all">
+      		<input type="text" name="email" id="email" placeholder="jane@smith.com" class="text ui-widget-content ui-corner-all">
+      		
+      		<label for="birth">生日</label>
+      		<input type="text" id ="birth" name="birth" class="text ui-widget-content ui-corner-all" >
  
       		<!-- Allow form submission with keyboard without duplicating the dialog button -->
       		<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
@@ -51,28 +74,119 @@
 	</div>
 	
 	<script>
-		var dialog;
-		dialog = $("#dialog-form").dialog({
-			autoOpen: false,
-			height: 400,
-			width: 350,
-			modal: true,
-			buttons: {
-			"Create an account": addUser,
-			Cancel: function() {
-			dialog.dialog( "close" );
-			}
-			},
-			close: function() {
-			form[ 0 ].reset();
-			allFields.removeClass( "ui-state-error" );
-			}
+		var dialog; // 註冊新帳號的的dialog
+		$(document).ready(function() {
+			initial(); // 需要先進行初始化的物件都先放在這裡面處理
+			cleanDialogInput();
+		})
+
+		function initial() {
+			$("#register_button").button();
+			$("#login_button").button();
+			dialog = $("#dialog-form").dialog({
+				autoOpen: false,
+				height: 400,
+				width: 350,
+				modal: true,
+				buttons: {"註冊": addUser,	Cancel: function() {
+					dialog.dialog( "close" );
+				}},
+				close: function() {
+					console.log("dialog close!");
+					cleanDialogInput();
+				}
+			});
+		}
+
+		$(function(){
+			$("#birth").datepicker({
+				dateFormat: "yy/mm/dd"});
 		});
-		
+
+		function cleanDialogInput() {
+			$("#submit-form input").val("");
+		}
+
+		function addUser() {
+			var valid = true;
+			var name = $("#name").val();
+			var passwd = $("#passwd").val();
+			var confirm = $("#confirmpasswd").val();
+			var phone = $("#phone").val();
+			var email = $("#email").val();
+			var birth = $("#birth").val();
+			var map = {
+				name: name, passwd: passwd, confirm: confirm, phone: phone, email: email, birth: birth
+			};
+			if(checkUserInfo(map)) { // 註冊成功
+				dialog.dialog( "close" );
+				$.ajax({
+					url: "create.do",
+					data: map,
+					type: "post",
+					success: function(result) {
+						;
+					}
+				});
+			}
+			else { //註冊失敗
+				;
+			}
+			return valid;
+		}
+
 		$("#register_button").click(function() {
 			dialog.dialog( "open" );
 		})
-		
+
+		function checkUserInfo(map) { // 傳入使用者的註冊資訊，並確認是否有資訊輸入錯誤
+			var result = true;
+			if(isUserNameCorrect(map.name) == false) {
+				result = false;
+				alert("帳號輸入錯誤");
+			}
+			if(isPasswdCorrect(map.passwd) == false) {
+				result = false;
+				alert("密碼輸入錯誤");
+			}
+			if(isConfirmPasswdCorrect(map.passwd, map.confirm) == false) {
+				result = false;
+				alert("再次輸入密碼欄位錯誤");
+			}
+			if(isPhoneCorrect(map.phone) == false) {
+				result = false;
+				alert("電話格式錯誤");
+			}
+			if(isEmailCorrect(map.email) == false) {
+				result = false;
+				alert("Email格式錯誤");
+			}
+			return result;
+		}
+		function isUserNameCorrect(name) {
+			var nameRule = /^[a-zA-Z]+[a-zA-Z0-9_]/;
+			if(name.search(nameRule) == -1)
+				return false;
+		}
+		function isPasswdCorrect(passwd) {
+			var passwdRule = /[a-zA-Z0-9]+/;
+			if(passwd.search(passwdRule) == -1)
+				return false;
+		}
+		function isConfirmPasswdCorrect(passwd, confirm) {
+			return confirm == passwd? true: false;
+		}
+		function isPhoneCorrect(phone) {
+			var phoneRule = /^(09)[0-9]{8}/;
+			if(phone.search(phoneRule) == -1)
+				return false;
+		}
+		function isEmailCorrect(email) {
+			var emailRule = /^([a-zA-Z0-9])+@([A-z0-9]+\.[a-zA-Z0-9]+)+$/;
+			if(email.search(emailRule) == -1)
+				return false;
+		}
+
 	</script>
 </body>
 </html>

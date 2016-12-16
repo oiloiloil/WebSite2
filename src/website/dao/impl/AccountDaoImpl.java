@@ -17,6 +17,7 @@ import java.sql.Statement;
 
 import website.common.ParseXml;
 import website.dao.AccountDao;
+import website.model.UserInfo;
 
 @Service("accountDao")
 public class AccountDaoImpl implements AccountDao{
@@ -53,6 +54,14 @@ public class AccountDaoImpl implements AccountDao{
 		accounts = jdbcTemplate.queryForList(sqlCmd, name);
 		
 		return accounts;
+	}
+
+
+	@Override
+	public void createUser(UserInfo user) throws Exception {
+		// TODO Auto-generated method stub
+		String sqlCmd = parseXml.getSqlByName("Account.createAccount");
+		jdbcTemplate.update(sqlCmd, user.getName(), user.getPasswd(), user.getPhone(), user.getEmail(), user.getBirth());
 	}
 	
 }

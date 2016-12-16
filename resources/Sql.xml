@@ -7,6 +7,10 @@
 		SELECT PASS, AUTH FROM ACCOUNT WHERE ACCT = ?
 	</Account.checkAccount>
 	
+	<Account.createAccount>
+		INSERT INTO ACCOUNT (ACCT, PASS, PHONE, EMAIL, BIRTH) VALUES (?, ?, ?, ?, ?)
+	</Account.createAccount>
+	
 	<!-- Account End-->
 	
 	
