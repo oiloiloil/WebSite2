@@ -9,7 +9,7 @@
 <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.20.custom.min.js"></script>
 <style>
-	clickbtn {background: #e77d09;}
+	clickbtn {background: #e77d09; width: 200px; height: 100px; font-size:15px}
 	label, input { display:block; }
     input.text { margin-bottom:12px; width:95%; padding: .4em; }
     fieldset { padding:0; border:0; margin-top:25px; }
@@ -54,13 +54,13 @@
     		<fieldset>
     		<!-- for表示label與哪個元件綁定，傳入元件的id -->
       		<label for="name">帳號</label>
-      		<input type="text" name="name" id="name" placeholder="帳號 12碼英數字" class="text ui-widget-content ui-corner-all" >
+      		<input type="text" name="name" id="name" placeholder="帳號 12碼英數字" maxlength="12" size="13" class="text ui-widget-content ui-corner-all" >
       		<label for="passwd">密碼</label>
-      		<input type="password" name="passwd" id="passwd" placeholder="6~12碼英數字" class="text ui-widget-content ui-corner-all">
+      		<input type="password" name="passwd" id="passwd" placeholder="6~12碼英數字" maxlength="12" size="13" class="text ui-widget-content ui-corner-all">
       		<label for="confirmpasswd">再次輸入密碼</label>
-      		<input type="password" name="confirmpasswd" id="confirmpasswd" placeholder="再次輸入密碼" class="text ui-widget-content ui-corner-all">
+      		<input type="password" name="confirmpasswd" id="confirmpasswd" placeholder="再次輸入密碼" maxlength="12" size="13" class="text ui-widget-content ui-corner-all">
       		<label for="phone">電話號碼</label>
-      		<input type="text"  name="phone" id="phone" placeholder="09xxxxxxxx, 10碼數字" class="text ui-widget-content ui-corner-all">
+      		<input type="text"  name="phone" id="phone" placeholder="09xxxxxxxx, 10碼數字" maxlength="10" size="11"  class="text ui-widget-content ui-corner-all">
       		<label for="email">Email</label>
       		<input type="text" name="email" id="email" placeholder="jane@smith.com" class="text ui-widget-content ui-corner-all">
       		
@@ -81,8 +81,16 @@
 		})
 
 		function initial() {
-			$("#register_button").button();
-			$("#login_button").button();
+			$("#register_button").button({
+				classes: {
+					"ui-button": "clickbtn" 
+				}
+			});
+			$("#login_button").button({
+				classes: {
+					"ui-button": "clickbtn" 
+				}
+			});
 			dialog = $("#dialog-form").dialog({
 				autoOpen: false,
 				height: 400,
@@ -118,19 +126,19 @@
 			var map = {
 				name: name, passwd: passwd, confirm: confirm, phone: phone, email: email, birth: birth
 			};
-			if(checkUserInfo(map)) { // 註冊成功
+			if(checkUserInfo(map)) { // 輸入資料正確
 				dialog.dialog( "close" );
 				$.ajax({
 					url: "create.do",
 					data: map,
 					type: "post",
 					success: function(result) {
-						;
 					}
 				});
+				alert("註冊成功");
 			}
-			else { //註冊失敗
-				;
+			else { // 輸入資料錯誤
+				alert("輸入資料有誤");
 			}
 			return valid;
 		}
@@ -161,6 +169,10 @@
 				result = false;
 				alert("Email格式錯誤");
 			}
+			if(isBirthCorrect(map.birth) == false) {
+				result = false;
+				alert("生日日期格式錯誤");
+			}
 			return result;
 		}
 		function isUserNameCorrect(name) {
@@ -169,7 +181,7 @@
 				return false;
 		}
 		function isPasswdCorrect(passwd) {
-			var passwdRule = /[a-zA-Z0-9]+/;
+			var passwdRule = /[a-zA-Z0-9]{6}/;
 			if(passwd.search(passwdRule) == -1)
 				return false;
 		}
@@ -182,8 +194,13 @@
 				return false;
 		}
 		function isEmailCorrect(email) {
-			var emailRule = /^([a-zA-Z0-9])+@([A-z0-9]+\.[a-zA-Z0-9]+)+$/;
+			var emailRule = /^\w+((\.[A-Za-z0-9]+)|(\-[A-Za-z0-9]+))*@[A-Za-z0-9]+((\.|\-)([A-Za-z0-9]+))*\.[A-Za-z]+$/;
 			if(email.search(emailRule) == -1)
+				return false;
+		}
+		function isBirthCorrect(birth) {
+			var birthRule = /^(((?:19|20)[0-9]{2})\/(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01]))*$/;
+			if(birth.search(birthRule) == -1)
 				return false;
 		}
 

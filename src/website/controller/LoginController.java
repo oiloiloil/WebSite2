@@ -41,7 +41,7 @@ public class LoginController {
 			return new ModelAndView("index", "resultMap", resultMap);
 		}
 		else // 登入失敗
-			return new ModelAndView("login", "errMsg", "帳號密碼輸入錯誤");
+			return new ModelAndView("login", "errMsg", "帳號 or 密碼輸入錯誤");
 	}
 	
 	@RequestMapping("/industryList.do")

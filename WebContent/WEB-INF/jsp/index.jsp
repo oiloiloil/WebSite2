@@ -32,7 +32,7 @@ Hi, ${resultMap.Name}. Welcome to Web Site Practice. <a href="logout.do">登出<
         </div>
     </c:if>
         <div>
-            <h3><a href="industryList.do">員工維護管理</a></h3>
+            <h3><a href="#">員工維護管理</a></h3>
             <div>客戶資料維護</div>
         </div>
         <div>
@@ -58,7 +58,13 @@ Hi, ${resultMap.Name}. Welcome to Web Site Practice. <a href="logout.do">登出<
 <script>
 
 	function goIndustry() {
-		
+		console.log("go industry");
+		$.ajax({
+			url: "industryList.do",
+			success: function(result) {
+				console.log("success");
+			}
+		});
 	}
 </script>
 </body>
