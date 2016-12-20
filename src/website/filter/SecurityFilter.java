@@ -24,7 +24,7 @@ public class SecurityFilter implements Filter {
 		this.filterConfig = filterConfig;
 		urls = new ArrayList<String>();
 		
-		// Get init parameter 
+		// Get init parameter，要避免那些action執行時不要進行filter的檢查
 		String avoidUrls = filterConfig.getInitParameter("avoid-urls");
 		StringTokenizer token = new StringTokenizer(avoidUrls, ",");
 		while(token.hasMoreTokens()) {
@@ -51,6 +51,7 @@ public class SecurityFilter implements Filter {
     	 */
     	if(!isAvoidAction(request.getRequestURI()) && 
     			(session.getAttribute("acct") == null || session.getAttribute("Authorise") == null)) {
+    		System.out.println("do error");
     		response.sendRedirect("error.do");
     		return;
     	}

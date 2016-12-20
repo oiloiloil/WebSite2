@@ -23,7 +23,7 @@ Hi, ${resultMap.Name}. Welcome to Web Site Practice. <a href="logout.do">登出<
             <h3><a href="#">選單參數管理</a></h3>
             <div>
                 <ul>
-                    <li><a href="#" onclick="goIndustry()">產業維護</a></li>
+                    <li><a href="industryList.do" onclick="goIndustry()">產業維護</a></li>
                     <li><a href="#">品項維護</a></li>
                     <li><a href="#">幣別維護</a></li>
                     <li><a href="#">國家城市維護</a></li>
@@ -58,13 +58,6 @@ Hi, ${resultMap.Name}. Welcome to Web Site Practice. <a href="logout.do">登出<
 <script>
 
 	function goIndustry() {
-		console.log("go industry");
-		$.ajax({
-			url: "industryList.do",
-			success: function(result) {
-				console.log("success");
-			}
-		});
 	}
 </script>
 </body>

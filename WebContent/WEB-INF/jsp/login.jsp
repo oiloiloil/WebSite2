@@ -169,10 +169,6 @@
 				result = false;
 				alert("Email格式錯誤");
 			}
-			if(isBirthCorrect(map.birth) == false) {
-				result = false;
-				alert("生日日期格式錯誤");
-			}
 			return result;
 		}
 		function isUserNameCorrect(name) {
@@ -196,11 +192,6 @@
 		function isEmailCorrect(email) {
 			var emailRule = /^\w+((\.[A-Za-z0-9]+)|(\-[A-Za-z0-9]+))*@[A-Za-z0-9]+((\.|\-)([A-Za-z0-9]+))*\.[A-Za-z]+$/;
 			if(email.search(emailRule) == -1)
-				return false;
-		}
-		function isBirthCorrect(birth) {
-			var birthRule = /^(((?:19|20)[0-9]{2})\/(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01]))*$/;
-			if(birth.search(birthRule) == -1)
 				return false;
 		}
 

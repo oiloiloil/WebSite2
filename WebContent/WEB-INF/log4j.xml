@@ -18,6 +18,17 @@
     	<param name="append" value="true" />
     	<param name="File" value="D:/Logs_training/logger.log" />
     	<param name="DatePattern" value="'-'yyyy-MM-dd'.log'" />
+    	<param name="Threshold" value="INFO" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yy/MM/dd HH:mm:ss}][%p][%C-%L] %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="debugfile" class="org.apache.log4j.DailyRollingFileAppender">
+    	<!-- append 設定為false，should not overwrite -->
+    	<param name="append" value="true" />
+    	<param name="File" value="D:/Logs_training/debuglogger.log" />
+    	<param name="DatePattern" value="'-'yyyy-MM-dd'.log'" />
     	<param name="Threshold" value="TRACE" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="[%d{yy/MM/dd HH:mm:ss}][%p][%C-%L] %m%n"/>
@@ -33,7 +44,7 @@
 
     <!-- 設置logger -->
     <logger name="website" additivity="false" >
-      	<level value="DEBUG" />
+      	<level value="INFO" />
       	<appender-ref ref="consoleAppender"/>
       	<appender-ref ref="file" />
     </logger>
@@ -42,12 +53,12 @@
     <logger name="org.springframework.jdbc.core.JdbcTemplate" additivity="false">
         <level value="DEBUG" />   
         <appender-ref ref="consoleAppender" />  
-        <appender-ref ref="file" />
+        <appender-ref ref="debugfile" />
     </logger>
     <logger name="org.springframework.jdbc.core.StatementCreatorUtils" additivity="false">
         <level value="TRACE" />   
         <appender-ref ref="consoleAppender" />
-        <appender-ref ref="file" /> 
+        <appender-ref ref="debugfile" /> 
     </logger>
     
 </log4j:configuration>

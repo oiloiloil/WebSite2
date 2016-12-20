@@ -44,7 +44,6 @@ public class WebController {
 		user.setBirth(birth);
 		accountDao.createUser(user);
 		
-		System.out.println("hello");
 		return new ModelAndView("login");
 	}
 	

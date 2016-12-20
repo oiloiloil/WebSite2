@@ -47,6 +47,7 @@ public class LoginController {
 	@RequestMapping("/industryList.do")
     public ModelAndView doIndustry(HttpServletRequest req,
             HttpServletResponse resp) throws Exception {
+		System.out.println("do industryList");
         return new ModelAndView("industryList");
     }
 
