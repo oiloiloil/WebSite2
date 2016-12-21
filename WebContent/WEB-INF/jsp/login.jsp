@@ -172,7 +172,7 @@
 			return result;
 		}
 		function isUserNameCorrect(name) {
-			var nameRule = /^[a-zA-Z]+[a-zA-Z0-9_]/;
+			var nameRule = /^[a-zA-Z]+[a-zA-Z0-9_]*/;
 			if(name.search(nameRule) == -1)
 				return false;
 		}

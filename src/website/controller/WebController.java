@@ -42,7 +42,8 @@ public class WebController {
 		user.setPhone(phone);
 		user.setEmail(email);
 		user.setBirth(birth);
-		accountDao.createUser(user);
+		if(user.check()) // 合法的話才會新增一筆資料
+			accountDao.createUser(user);
 		
 		return new ModelAndView("login");
 	}
