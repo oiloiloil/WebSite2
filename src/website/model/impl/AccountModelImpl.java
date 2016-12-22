@@ -21,7 +21,10 @@ public class AccountModelImpl implements AccountModel{
 		this.accountDao = accountDao;
 	}
 	
-	// 檢查使用者登入帳號密碼
+	/*
+	 * 檢查使用者登入帳號密碼
+	 * 有找到一組正確的帳號密碼的話，就會回傳這組帳密
+	 */
 	@Override
 	public Map<String, Object> checkAccount(String name, String password) throws Exception {
 		List<Map<String, Object>> accounts = accountDao.getAccountByName(name, password); // 一個名字可能有多組不同的密碼
@@ -35,7 +38,6 @@ public class AccountModelImpl implements AccountModel{
 				return userAccount;
 			}
 		}
-		
-		return null; // 如果accounts裡面找不到一個符合password的map，代表使用者的密碼輸入錯誤
+		return null;
 	}
 }

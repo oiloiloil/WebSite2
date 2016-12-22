@@ -9,13 +9,11 @@ public class UserInfo {
 	private String email = "";
 	private String birth = "";
 	
-	/*
-	 * 使用者建立帳號時，將使用者輸入的資料存成userInfo
-	 */
 	public UserInfo() {
-		
 	}
 	
+	
+	// 一次檢查所有的欄位是否正確，全部正確才會回傳true
 	public boolean check() {
 		if(!isNameCorrect())
 			return false;

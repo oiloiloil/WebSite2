@@ -43,7 +43,6 @@
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	
-	<!-- 在jsp裡面要載入js和css的設定 -->
 	<servlet-mapping>
   		<servlet-name>default</servlet-name>
   		<url-pattern>*.css</url-pattern>

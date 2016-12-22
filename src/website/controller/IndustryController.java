@@ -70,12 +70,6 @@ public class IndustryController {
 	@RequestMapping("/edit.do")
     public void doEdit(HttpServletRequest req,
             HttpServletResponse res) throws Exception {
-//        Map<String, String[]> map = req.getParameterMap();
-//
-//        for (String s : map.keySet()) {
-//            System.out.println(s + " : " + map.get(s)[0]);
-//        }
-
         String op = req.getParameter("oper");
         String pk = req.getParameter("PK");
         String indName = req.getParameter("IND_NAME");

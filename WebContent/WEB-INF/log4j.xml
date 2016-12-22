@@ -8,11 +8,7 @@
             <param name="ConversionPattern" value="[%d{yy/MM/dd HH:mm:ss}][%p][%C-%L] %m%n"/>
         </layout>
     </appender>
-    <!--
-    	DailyRollingFileAppender: daily log file generation.
-    	LEVEL層級: ALL < DEBUG < INFO < WARN < ERROR < FATAL < OFF，
-    	 如果logger的level小於appender的 threshold level，logger的資訊就不會被記錄下來。
-     -->
+
     <appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
     	<!-- append 設定為false，should not overwrite -->
     	<param name="append" value="true" />
@@ -25,7 +21,6 @@
     </appender>
     
     <appender name="debugfile" class="org.apache.log4j.DailyRollingFileAppender">
-    	<!-- append 設定為false，should not overwrite -->
     	<param name="append" value="true" />
     	<param name="File" value="D:/Logs_training/debuglogger.log" />
     	<param name="DatePattern" value="'-'yyyy-MM-dd'.log'" />

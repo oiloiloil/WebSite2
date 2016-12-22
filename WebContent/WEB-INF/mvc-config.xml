@@ -10,7 +10,7 @@
 						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
 						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
 
-	<aop:aspectj-autoproxy /> <!-- 啟動對Aspectj註解的支持 -->
+	<aop:aspectj-autoproxy />
 	<!-- 告訴spring我要使用註解，以底下的方式告訴spring，spring會自動掃描"website"底下的路徑 -->
 	<context:component-scan base-package="website" />
 	

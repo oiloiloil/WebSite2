@@ -9,7 +9,6 @@
 <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.20.custom.min.js"></script>
 <style>
-	clickbtn {background: #e77d09; width: 200px; height: 100px; font-size:15px}
 	label, input { display:block; }
     input.text { margin-bottom:12px; width:95%; padding: .4em; }
     fieldset { padding:0; border:0; margin-top:25px; }
@@ -44,9 +43,7 @@
 				</tr>
 			</table>
 	</form>
-	<!-- 
-		註冊表單
-	-->
+
 	<div id="dialog-form" title="註冊新帳號">
   		<p class="validateTips">All form fields are required.</p>
  
@@ -81,16 +78,8 @@
 		})
 
 		function initial() {
-			$("#register_button").button({
-				classes: {
-					"ui-button": "clickbtn" 
-				}
-			});
-			$("#login_button").button({
-				classes: {
-					"ui-button": "clickbtn" 
-				}
-			});
+			$("#register_button").button();
+			$("#login_button").button();
 			dialog = $("#dialog-form").dialog({
 				autoOpen: false,
 				height: 400,
@@ -147,7 +136,8 @@
 			dialog.dialog( "open" );
 		})
 
-		function checkUserInfo(map) { // 傳入使用者的註冊資訊，並確認是否有資訊輸入錯誤
+		// 傳入使用者的註冊資訊，並確認是否有資訊輸入錯誤
+		function checkUserInfo(map) { 
 			var result = true;
 			if(isUserNameCorrect(map.name) == false) {
 				result = false;

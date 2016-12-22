@@ -24,7 +24,7 @@ public class SecurityFilter implements Filter {
 		this.filterConfig = filterConfig;
 		urls = new ArrayList<String>();
 		
-		// Get init parameter，要避免那些action執行時不要進行filter的檢查
+		// Get init parameter，抓取web.xml裡有哪些action執行時不要進行filter的檢查
 		String avoidUrls = filterConfig.getInitParameter("avoid-urls");
 		StringTokenizer token = new StringTokenizer(avoidUrls, ",");
 		while(token.hasMoreTokens()) {
@@ -46,12 +46,11 @@ public class SecurityFilter implements Filter {
     	HttpSession session = request.getSession();
     	
     	/*
-    	 * 重導向時注意，要幫filter加入error.do這個例外情況，避免導向過去後又經過filter在一次的驗證，
+    	 * 重導向時注意，確認導向後的 action 是否有在排除清單裡面，避免導向過去後又經過filter再一次的驗證，
     	 * 導致一直重複導向，出現錯誤
     	 */
     	if(!isAvoidAction(request.getRequestURI()) && 
     			(session.getAttribute("acct") == null || session.getAttribute("Authorise") == null)) {
-    		System.out.println("do error");
     		response.sendRedirect("error.do");
     		return;
     	}
@@ -59,9 +58,6 @@ public class SecurityFilter implements Filter {
     }
     
     /*
-     * 確認目前的頁面是否為要跳過filter的頁面，使用action進行確認，要跳過的action設定在web.xml裡面，
-     * 	<param-name>avoid-urls</param-name>
-		<param-value>login.do</param-value>
 	 * 檢查requestURI是否包含要忽略的action
      */
     protected boolean isAvoidAction(String requestURI) {

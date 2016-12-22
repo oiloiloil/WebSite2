@@ -3,7 +3,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<!-- 使網頁能自動換頁，content="3;url=/Website"表示3秒後跳回url -->
 <meta http-equiv="refresh" content="3;url=/Website" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>404</title>

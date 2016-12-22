@@ -51,6 +51,7 @@ public class LoginController {
         return new ModelAndView("industryList");
     }
 
+	// 清除session的資料
     @RequestMapping("/logout.do")
 	public ModelAndView handleLogout(HttpServletRequest arg0,
 			HttpServletResponse arg1) throws Exception {
@@ -59,7 +60,6 @@ public class LoginController {
 		arg0.getSession().removeAttribute("Authorise");
 		
 		return new ModelAndView("login");
-		
 	}
     
     public void setViewPage(String viewPage) {

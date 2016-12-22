@@ -42,7 +42,7 @@ public class WebController {
 		user.setPhone(phone);
 		user.setEmail(email);
 		user.setBirth(birth);
-		if(user.check()) // 合法的話才會新增一筆資料
+		if(user.check()) // 所有欄位都正確的話才會新增這筆使用者資料
 			accountDao.createUser(user);
 		
 		return new ModelAndView("login");

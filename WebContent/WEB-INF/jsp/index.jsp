@@ -56,8 +56,8 @@ Hi, ${resultMap.Name}. Welcome to Web Site Practice. <a href="logout.do">登出<
 <div id="mainPage">
 </div>
 <script>
-
 	function goIndustry() {
+		console.log("industry");
 	}
 </script>
 </body>
