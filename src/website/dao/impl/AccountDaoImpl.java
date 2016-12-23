@@ -46,7 +46,6 @@ public class AccountDaoImpl implements AccountDao{
 	// 新增一筆使用者資料
 	@Override
 	public void createUser(UserInfo user) throws Exception {
-		// TODO Auto-generated method stub
 		String sqlCmd = parseXml.getSqlByName("Account.createAccount");
 		jdbcTemplate.update(sqlCmd, user.getName(), user.getPasswd(), user.getPhone(), user.getEmail(), user.getBirth());
 	}
