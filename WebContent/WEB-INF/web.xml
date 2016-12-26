@@ -33,7 +33,7 @@
 		<filter-class>website.filter.SecurityFilter</filter-class>
 		<init-param>
 			<param-name>avoid-urls</param-name>
-			<param-value>login.do,error.do,create.do</param-value>
+			<param-value>login.do,error.do,create.do,findUser.do</param-value>
 		</init-param>
 	</filter>
   

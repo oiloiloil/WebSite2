@@ -47,7 +47,15 @@ public class AccountDaoImpl implements AccountDao{
 	@Override
 	public void createUser(UserInfo user) throws Exception {
 		String sqlCmd = parseXml.getSqlByName("Account.createAccount");
-		jdbcTemplate.update(sqlCmd, user.getName(), user.getPasswd(), user.getPhone(), user.getEmail(), user.getBirth());
+		if(!findUser(user.getName(), user.getPasswd())) // 如果不存在的話才新增這筆資料
+			jdbcTemplate.update(sqlCmd, user.getName(), user.getPasswd(), user.getPhone(), user.getEmail(), user.getBirth());
 	}
 	
+	public boolean findUser(String acct, String pass) throws Exception {
+		String sqlCmd = parseXml.getSqlByName("Account.findUser");
+		List data = jdbcTemplate.queryForList(sqlCmd, acct);
+		if(data.size() == 0)
+			return false;
+		return true;
+	}
 }

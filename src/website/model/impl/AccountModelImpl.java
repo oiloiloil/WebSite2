@@ -22,8 +22,7 @@ public class AccountModelImpl implements AccountModel{
 	}
 	
 	/*
-	 * 檢查使用者登入帳號密碼
-	 * 有找到一組正確的帳號密碼的話，就會回傳這組帳密
+	 * 只會出現一組帳號密碼(每個帳戶只會出現一次)
 	 */
 	@Override
 	public Map<String, Object> checkAccount(String name, String password) throws Exception {

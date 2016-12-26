@@ -116,15 +116,20 @@
 				name: name, passwd: passwd, confirm: confirm, phone: phone, email: email, birth: birth
 			};
 			if(checkUserInfo(map)) { // 輸入資料正確
-				dialog.dialog( "close" );
-				$.ajax({
-					url: "create.do",
-					data: map,
-					type: "post",
-					success: function(result) {
-					}
-				});
-				alert("註冊成功");
+				if(!isUserExist(name, passwd)) {
+					dialog.dialog( "close" );
+					$.ajax({
+						url: "create.do",
+						data: map,
+						type: "post",
+						success: function(result) {
+						}
+					});
+					alert("註冊成功");
+				}
+				else {
+					alert("此帳號已被註冊過")
+				}
 			}
 			else { // 輸入資料錯誤
 				alert("輸入資料有誤");
@@ -132,6 +137,24 @@
 			return valid;
 		}
 
+		function isUserExist(name, passwd) {
+			var hsaUser = false;
+			$.ajax({
+				url: "findUser.do",
+				dataType: "json",
+				data: {
+					name: name,
+					passwd: passwd
+				},
+				success: function(result) {
+					console.log(hasUser);
+					if(result == "exist")
+						hasUser = true;
+				}
+			});
+			return hsaUser;
+		}
+		
 		$("#register_button").click(function() {
 			dialog.dialog( "open" );
 		})

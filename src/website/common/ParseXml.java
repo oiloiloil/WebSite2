@@ -6,6 +6,8 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import com.sun.media.jfxmedia.logging.Logger;
+
 public class ParseXml {
 	private static String SQLFileName = "Sql.xml"; 
 	private static Document document = null;

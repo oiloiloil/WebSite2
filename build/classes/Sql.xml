@@ -8,8 +8,12 @@
 	</Account.checkAccount>
 	
 	<Account.createAccount>
-		INSERT INTO ACCOUNT (ACCT, PASS, PHONE, EMAIL, BIRTH) VALUES (?, ?, ?, ?, ?)
+		INSERT INTO ACCOUNT (ACCT, PASS, PHONE, EMAIL, BIRTH) VALUES (?, MD5(?), ?, ?, ?)
 	</Account.createAccount>
+	
+	<Account.findUser>
+		SELECT * FROM ACCOUNT WHERE ACCT = ?
+	</Account.findUser>
 	
 	<!-- Account End-->
 	
