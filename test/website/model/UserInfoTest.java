@@ -54,6 +54,12 @@ public class UserInfoTest {
 		assertFalse(user.isPassCorrect());
 	}
 	
+	@Test
+	public void testPass_validLength() {
+		user.setPasswd("12345678");
+		assertTrue(user.isPassCorrect());
+	}
+	
 	// 全輸入符號
 	@Test
 	public void testPass_invalidInputWithSymbol() {

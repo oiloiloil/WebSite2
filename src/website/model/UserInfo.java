@@ -34,7 +34,7 @@ public class UserInfo {
 		return this.name.matches(nameRule);
 	}
 	public boolean isPassCorrect() { // pass: 6~12英數字
-		String passRule = "[a-zA-Z0-9]{6}";
+		String passRule = "[a-zA-Z0-9]{6,}";
 		if(this.passwd.length() > 12)
 			return false;
 		return this.passwd.matches(passRule);

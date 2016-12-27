@@ -4,7 +4,7 @@
 	<!-- Account Start-->
 	
 	<Account.checkAccount>
-		SELECT PASS, AUTH FROM ACCOUNT WHERE ACCT = ?
+		SELECT PASS, AUTH FROM ACCOUNT WHERE BINARY ACCT = ? AND PASS = MD5(?)
 	</Account.checkAccount>
 	
 	<Account.createAccount>
@@ -12,7 +12,7 @@
 	</Account.createAccount>
 	
 	<Account.findUser>
-		SELECT * FROM ACCOUNT WHERE ACCT = ?
+		SELECT * FROM ACCOUNT WHERE BINARY ACCT = ?
 	</Account.findUser>
 	
 	<!-- Account End-->

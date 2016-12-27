@@ -116,20 +116,22 @@
 				name: name, passwd: passwd, confirm: confirm, phone: phone, email: email, birth: birth
 			};
 			if(checkUserInfo(map)) { // 輸入資料正確
-				if(!isUserExist(name, passwd)) {
-					dialog.dialog( "close" );
-					$.ajax({
-						url: "create.do",
-						data: map,
-						type: "post",
-						success: function(result) {
-						}
-					});
-					alert("註冊成功");
-				}
-				else {
-					alert("此帳號已被註冊過")
-				}
+				$.ajax({
+					url: "create.do",
+					data: map,
+					type: "post",
+					dataType: "json",
+					error: function(msg) {
+						alert(msg.message);
+						console.log("error");
+						console.log(msg);
+					},
+					success: function(result) {
+						alert(result.message);
+						console.log("success");
+						console.log(result.message);
+					}
+				});
 			}
 			else { // 輸入資料錯誤
 				alert("輸入資料有誤");
@@ -137,24 +139,6 @@
 			return valid;
 		}
 
-		function isUserExist(name, passwd) {
-			var hsaUser = false;
-			$.ajax({
-				url: "findUser.do",
-				dataType: "json",
-				data: {
-					name: name,
-					passwd: passwd
-				},
-				success: function(result) {
-					console.log(hasUser);
-					if(result == "exist")
-						hasUser = true;
-				}
-			});
-			return hsaUser;
-		}
-		
 		$("#register_button").click(function() {
 			dialog.dialog( "open" );
 		})
@@ -190,7 +174,7 @@
 				return false;
 		}
 		function isPasswdCorrect(passwd) {
-			var passwdRule = /[a-zA-Z0-9]{6}/;
+			var passwdRule = /([a-zA-Z0-9]){6,}/;
 			if(passwd.search(passwdRule) == -1)
 				return false;
 		}

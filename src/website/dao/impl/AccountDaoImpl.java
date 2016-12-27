@@ -38,7 +38,7 @@ public class AccountDaoImpl implements AccountDao{
 	public List<Map<String, Object>> getAccountByName(String name, String password) throws Exception {
 		List<Map<String, Object>> accounts = null;
 		String sqlCmd = parseXml.getSqlByName("Account.checkAccount");
-		accounts = jdbcTemplate.queryForList(sqlCmd, name); // 取出的accounts為這位user的所有可能密碼的list(傳入name)，只取出pass和auth這兩個欄位
+		accounts = jdbcTemplate.queryForList(sqlCmd, name, password); // 取出的accounts為這位user的所有可能密碼的list(傳入name)，只取出pass和auth這兩個欄位
 		
 		return accounts;
 	}
@@ -47,10 +47,10 @@ public class AccountDaoImpl implements AccountDao{
 	@Override
 	public void createUser(UserInfo user) throws Exception {
 		String sqlCmd = parseXml.getSqlByName("Account.createAccount");
-		if(!findUser(user.getName(), user.getPasswd())) // 如果不存在的話才新增這筆資料
-			jdbcTemplate.update(sqlCmd, user.getName(), user.getPasswd(), user.getPhone(), user.getEmail(), user.getBirth());
+		jdbcTemplate.update(sqlCmd, user.getName(), user.getPasswd(), user.getPhone(), user.getEmail(), user.getBirth());
 	}
 	
+	@Override
 	public boolean findUser(String acct, String pass) throws Exception {
 		String sqlCmd = parseXml.getSqlByName("Account.findUser");
 		List data = jdbcTemplate.queryForList(sqlCmd, acct);

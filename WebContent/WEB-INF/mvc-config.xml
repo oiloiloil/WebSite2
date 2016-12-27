@@ -9,7 +9,7 @@
 						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
 						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
-
+	
 	<aop:aspectj-autoproxy />
 	<!-- 告訴spring我要使用註解，以底下的方式告訴spring，spring會自動掃描"website"底下的路徑 -->
 	<context:component-scan base-package="website" />
@@ -42,5 +42,26 @@
             <value>1234</value>
         </property> 
 	</bean>
-	
+	<!-- 
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+    	<property name="cacheSeconds" value="0" />
+    	<property name="messageConverters">
+        	<list>
+            	<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+            	</bean>
+        	</list>
+    	</property>
+	</bean>
+	 -->
+	<!-- 
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"> 
+	</bean> 
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"> 
+    	<property name="messageConverters"> 
+        	<list> 
+            	<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" /> 
+        	</list> 
+    	</property> 
+	</bean>
+	 -->
 </beans>
